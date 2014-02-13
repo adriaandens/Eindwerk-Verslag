@@ -1,0 +1,20 @@
+Wij geven een gecompileerd C programma die exploitbaar is. Zij schrijven op hun eigen computer een exploit programma in C. Deze loaden ze up onze server (via een webpagina). Dit start in de achtergrond een event die zorgt dat het exploitprogramma wordt nagekeken of deze juist is.
+
+Probleem: Het compileren en uitvoeren van onbekende C code op een eigen server zonder dat deze alles kapot maakt met als doel nakijken of deze een gecompileerd programma kan exploiten.
+
+* Operating system-level virtualization ( https://en.wikipedia.org/wiki/Jail_%28computer_security%29#Implementations ) 
+** chroot: zorgt ervoor dat ie geen andere programma's kan runnen dan nodig zijn (en ook geen bestanden bekijken buiten de chroot). Werkt niet tegen CPU en Memory use (en dus infinite loops of mallocs). 
+** FreeBSD jail: Lijkt een goede oplossing doordat elke oefening in een eigen jail draait (dus je kan zo verschillende oefeningen van elkaar scheiden) en er is support voor disablen van bepaalde functies en beperken van cpu tijd en memory.
+** OpenVZ: (http://download.openvz.org/doc/openvz-intro.pdf) Lijkt ook heel handig. Voor elke oefening is er een template. Na elke oefening uit te voeren, deleten we de VE en starten we een nieuwe op als iemand nog eens code invoert. Opstarten van een nieuwe VE uit een template duurt blijkbaar slechts enkele seconden. 
+
+* Uitvoeren als gelimiteerde gebruiker met enkel rechten op 1 map met opgave en hun exploitcode. (nobody user in Linux?)
+
+Probleem: Uitkomst printf'en.
+Meer uitleg: Bij sommige opdrachten is de tekst die geoutput wordt de manier om te kijken of het programma "gekraakt" is. We willen echter dat de gebruiker niet gewoon printf("Output string") kan doen om te simuleren dat hij het programma heeft ge-exploit.
+* Een zeer slim programma schrijven die de (exploit) C code kan interpreteren en verstaan.
+* 
+
+Probleem: Gebruik van zaken die helemaal niet nodig zijn (met sockets werken, bepaalde files proberen te bereiken)
+* Regex'en op "#include" statements en slechts enkele toelaten (stdio.h, string.h, ...) afhankelijk van de oefening.
+
+Andere oplossingen?
