@@ -14,3 +14,4 @@ pdflatex verslag.tex
 open verslag.pdf (optioneel)
 ```
 
+(Steek dat dus in een bash scriptje of in een vim keybinding)
