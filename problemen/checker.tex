@@ -1,0 +1,26 @@
+Voor de oefeningen over exploits in gecompileerde programma's willen we nakijken of de student succesvol het programma heeft kunnen exploiten. Hiervoor laten we toe dat de student zijn C code uploadt via de website waarna het zal nagekeken worden door een intern script.\\
+\\
+De vraag is natuurlijk hoe je dit veilig kunt doen. De student kan immers schrijven wat hij wil in het programma dat hij uploadt en uitgevoert zal worden achter de schermen. Oplossingen hiervor zijn \emph{Operating System level Virtualization} of Containers en volledige virtualisatie of Virtuele Machines.
+
+\subsection{Containers of VMs}
+Het verschil tussen beiden dat is het verschil tussen \emph{Operating System level Virtualization} en virtuele machines is dat bij een OS-level virtualisatie de containers gebruik maken van de kernel van de host terwijl er bij virtuele machines een strikte scheiding is tussen twee machines, elk gebruikt zijn eigen kernel.\\
+\\
+Het voordeel van virtuele machines is daardoor duidelijk, je kan namelijk een Windows VM maken en daarnaast een OS X VM draaien omdat deze toch geen kernel delen. Dit is niet mogelijk met OS-level virtualisatie. Containers hebben dan weer het zeer snel opstart doordat het gebruik maakt van de kernel van het hostsysteem.\\
+\\
+Onze voorkeur gaat hierdoor uit naar OS-level virtualisatie omdat we enkel Linux machines nodig hebben en omdat we (zeer) snel een nieuwe container willen kunnen bouwen, gebruiken en dan terug verwijderen.\\
+\\
+Er zijn enkele verschillende praktische implementaties van OS-level virtualisatie, ik bespreek hieronder de meest relevante voor onze probleemstelling. Chroots worden bijvoorbeeld niet besproken omdat je hiermee geen limitaties kunt opleggen voor geheugen- en cpugebruik.
+\begin{description}
+\item[LXC] LXC of Linux Containers maakt gebruik van cgroups (control groups) en namespaces om OS-level virtualisatie toe te laten. LXC maakt dus gebruik van de Linux kernel om virtualisatie aan te bieden.
+\item[Docker] Docker gebruikt LXC om virtualisatie aan te bieden en is geprogrammeerd in Go \cite{dockergithub}. Het voordeel van Docker is dat er een grote repository bestaat met beschikbare templates zodat je zelf geen LXC template meer hoeft te maken \cite{dockerrepo}.
+\item[FreeBSD Jails] Jails zijn een uitbreiding van de mogelijkheden van een chroot. 
+\item[OpenVZ]  
+\end{description}
+
+Onze keuze valt op OpenVZ voornamelijk omdat de andere opties afvallen voor \'e\'en of andere reden. LXC bijvoorbeeld is momenteel druk bezig met de release candidate van versie 1.0.0. \cite{lxcbuilds}. Hierdoor lijkt het ons ongeschikt om deze al in een omgeving te gebruiken waar beveiliging een prioriteit is. Hetzelfde geldt eigenlijk voor Docker dat momenteel op versie 0.8 zit (\cite{dockerpunt8}) en zichzelf nog niet klaar beschouwt voor productie \cite{dockerv1}.
+
+\subsection{Praktisch; Hoe gaat het in zijn werk}
+% c code uploaden via PHP form, je kan met radiobuttons selecteren welke opties je aan gcc meegeeft.
+% PHP doet wat checks en stuurt het daarna door naar een daemon (bereikbaar via een privaat ip adres) die het vandaar overneemt. PHP kan nu al aan de gebruiker zeggen dat men bezig is de oefening na te kijken.
+% De daemon start een nieuwe thread die de code nakijkt, 
+to do...
