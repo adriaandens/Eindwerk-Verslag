@@ -6,6 +6,8 @@ Probleem: Het compileren en uitvoeren van onbekende C code op een eigen server z
 ** chroot: zorgt ervoor dat ie geen andere programma's kan runnen dan nodig zijn (en ook geen bestanden bekijken buiten de chroot). Werkt niet tegen CPU en Memory use (en dus infinite loops of mallocs). 
 ** FreeBSD jail: Lijkt een goede oplossing doordat elke oefening in een eigen jail draait (dus je kan zo verschillende oefeningen van elkaar scheiden) en er is support voor disablen van bepaalde functies en beperken van cpu tijd en memory.
 ** OpenVZ: (http://download.openvz.org/doc/openvz-intro.pdf) Lijkt ook heel handig. Voor elke oefening is er een template. Na elke oefening uit te voeren, deleten we de VE en starten we een nieuwe op als iemand nog eens code invoert. Opstarten van een nieuwe VE uit een template duurt blijkbaar slechts enkele seconden. 
+** lxc
+combineren me cgroups
 
 * Uitvoeren als gelimiteerde gebruiker met enkel rechten op 1 map met opgave en hun exploitcode. (nobody user in Linux?)
 
