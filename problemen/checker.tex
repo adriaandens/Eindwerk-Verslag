@@ -3,11 +3,11 @@ Voor de oefeningen over exploits in gecompileerde programma's willen we nakijken
 De vraag is natuurlijk hoe je dit veilig kunt doen. De student kan immers schrijven wat hij wil in het programma dat hij uploadt. Oplossingen hiervor zijn \emph{Operating System level Virtualization} of Containers en volledige virtualisatie of Virtuele Machines.
 
 \subsection{Containers of VMs}
-Het verschil tussen beiden is dat bij een OS-level virtualisatie de containers gebruik maken van de kernel van de host terwijl er bij virtuele machines een strikte scheiding is tussen twee machines, elk gebruikt zijn eigen kernel.\\
+Het verschil tussen beiden is dat bij een OS-level virtualisatie de containers gebruik maken van de kernel van de host terwijl er bij virtuele machines een strikte scheiding is tussen twee machines; elk gebruikt zijn eigen kernel.\\
 \\
-Het voordeel van virtuele machines is daardoor duidelijk, je kan namelijk een Windows VM maken en daarnaast een OS X VM draaien omdat deze toch geen kernel delen. Dit is niet mogelijk met OS-level virtualisatie. Containers hebben dan weer het zeer snel opstart doordat het gebruik maakt van de kernel van het hostsysteem.\\
+Het voordeel van virtuele machines is daardoor duidelijk, je kan namelijk een Windows VM draaien en daarnaast een OS X VM draaien omdat deze geen kernel delen. Dit is niet mogelijk met OS-level virtualisatie. Containers hebben dan weer het voordeel dat deze zeer snel opstarten doordat ze gebruik maken van de kernel van het hostsysteem.\\
 \\
-Onze voorkeur gaat hierdoor uit naar OS-level virtualisatie omdat we enkel Linux machines nodig hebben en omdat we (zeer) snel een nieuwe container willen kunnen bouwen, gebruiken en dan terug verwijderen.\\
+Onze voorkeur gaat hierdoor uit naar OS-level virtualisatie omdat we enkel Linux machines nodig hebben en omdat we (zeer) snel een nieuwe container willen kunnen bouwen, gebruiken en dan terug verwijderen. Bovendien verwachten we (na\"ief?) niet dat veel studenten in staat zullen zijn om uit de Container te breken indien er zich zo'n exploits bevinden in de gebruikte software. Hierdoor lijken de nadelen van volledige virtualisatie niet op te wegen tegen de voordelen.\\
 \\
 Er zijn enkele verschillende praktische implementaties van OS-level virtualisatie, ik bespreek hieronder de meest relevante voor onze probleemstelling. Chroots worden bijvoorbeeld niet besproken omdat je hiermee geen limitaties kunt opleggen voor geheugen- en cpugebruik.
 \begin{description}
