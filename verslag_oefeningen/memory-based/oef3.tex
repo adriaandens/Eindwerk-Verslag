@@ -1,0 +1,22 @@
+\begin{enumerate}
+  \item gcc -g -fno-stack-protector -z execstack -o prism prism.c
+  \item gdb -q prism 
+  \item (gdb) list
+  	\begin{enumerate}
+  	\item Door dit commando uit te voeren krijgen we een overzicht van de programma code
+  	\item We zoeken de scharnierpunten in dit programma:
+  		\begin{enumerate}
+  		\item 2 argumenten: \textless IP-address\textgreater \textless password\textgreater
+  		\item pw
+  		\item return\_val == 0
+ 		\item Het return adres moet overschreven worden met het adres van de gegevens functie
+  		\end{enumerate}
+  	\end{enumerate}
+  \item set disassembly-flavor intel
+  	\begin{enumerate}
+  	\item Disassembly taal naar intel zetten
+  	\end{enumerate}
+  \item disass gegevens
+  
+  
+\end{enumerate}

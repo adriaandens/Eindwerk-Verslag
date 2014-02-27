@@ -3,33 +3,33 @@
   \item In de broncode kan je zien dat er geen post gedaan wordt, maar dat er een Javascript functie gebruikt wordt.
   \item Binnen de head tag wordt verwezen naar een apart Javascript bestand. Open het.
   \item De code is verdoezeld, maak deze terug mooi met een tool. (Bijvoorbeeld: http://jsbeautifier.org/)
-  	\begin{enumerate}
-  	\item Sommige tools, inclusief jsbeautifier, doen moeilijk als je de laatste puntkomma laat staan.
-  	\end{enumerate}
+   \begin{enumerate}
+   \item Sommige tools, inclusief jsbeautifier, doen moeilijk als je de laatste puntkomma laat staan.
+   \end{enumerate}
   \item Zoek de login-functie. Het inloggen gebeurt blijkbaar volledig in Javascript.
-  	\begin{enumerate}
-  	\item De gebruikers worden blijkbaar bijgehouden in de variabele 'data', maar de wachtwoorden worden geëncrypteerd.
-  	\item Het encrypteren gebeurt met de functie 'encryptPassword'. Elk teken van het wachtwoord wordt met toString(16) naar hexadecimaal omgezet.
-	\item Zoek de variabele 'data', kopieer het wachtwoord van 'khl', open een converter tool van hex naar ascii en plak het wachtwoord erin.
-  	\end{enumerate}
+   \begin{enumerate}
+   \item De gebruikers worden blijkbaar bijgehouden in de variabele 'data', maar de wachtwoorden worden geëncrypteerd.
+   \item Het encrypteren gebeurt met de functie 'encryptPassword'. Elk teken van het wachtwoord wordt met toString(16) naar hexadecimaal omgezet.
+\item Zoek de variabele 'data', kopieer het wachtwoord van 'khl', open een converter tool van hex naar ascii en plak het wachtwoord erin.
+   \end{enumerate}
   \item Nu we het wachtwoord hebben, wordt het tijd om de score te verhogen.
-  \item De knop op de startpagina gebruikt de functie 'klik'. 
+  \item De knop op de startpagina gebruikt de functie 'klik'.
   \item Automatisch aanpassen:
   \begin{enumerate}
   \item We laten een for-lus de functie 'klik' 200000 keer oproepen.
   \item CTRL + SHIFT + j; typ 'for (var i = 0; i < 199987; i++) { klik(); }', druk op enter, wachten... wachten... Klaar!
-  	\end{enumerate}
+   \end{enumerate}
   \item Manueel aanpassen:
-  	\begin{enumerate}
-  	\item CTRL + SHIFT + j
-  	\item document.cookies='score=200000'
-  	\item data.setScore('khl', 199999)
-  	\item Klik nu een keer op de knop om de data te updaten.
-  	\end{enumerate}
+   \begin{enumerate}
+   \item CTRL + SHIFT + j
+   \item document.cookies='score=200000'
+   \item data.setScore('khl', 199999)
+   \item Klik nu een keer op de knop om de data te updaten.
+   \end{enumerate}
   \item Ga nu naar de 'highscores' pagina en klik op 'controleren'.
   \item Als alles juist ging, moet je nu het wachtwoord van gebruiker 'khl' ingeven.
-    	\begin{enumerate}
- 		\item khlsucces!
- 		\end{enumerate}
-  \item Oefening voltooid!  
+     \begin{enumerate}
+  \item khlsucces!
+  \end{enumerate}
+  \item Oefening voltooid!
 \end{enumerate}
