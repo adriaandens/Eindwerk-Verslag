@@ -1,0 +1,83 @@
+\begin{enumerate}
+  \item decipher: locdknox/ozsmjsz.jsz is de opgave.
+  \item Gebruik een ceasar decoder.
+  \item Oplossing: bestanden/epiczip.zip
+  \item Ga naar http://192.168.255.130/bestanden/epiczip.zip
+  	\begin{enumerate}
+  	\item foto1, foto2, gaWeg.mp3 en README
+  	\item password protected
+  	\end{enumerate}
+  \item gebruik fcrackzip om het paswoord te achterhalen
+  	\begin{enumerate}
+  	\item fcrackzip -b -l 6 -v -c 1a epiczip.zip
+  	\item Na een paar minuten: 8394pw
+  	\end{enumerate}
+  \item Unzippen van de epiczip.zip
+  \item README lezen
+  	\begin{enumerate}
+  	\item foto1		   		 - Hint for finding the solution
+  	\item foto2              - Second hint for finding the solution
+  	\item gaWeg.mp3          - Last for finding the solution
+  	\end{enumerate}
+  \item Hints overlopen
+  	\begin{enumerate}
+  	\item foto1:
+  		\begin{enumerate}
+  		\item Openen met fotobewerking programma (vb. GIMP
+  		\item Pak de fuzzy select tool (magic wand)
+  		\item Zet de treshold op 0
+  		\item Selecteer het wit tussen de Keep Away letters
+  		\item De letters telnet verschijnen
+  		\end{enumerate}
+  	\item foto2:
+  		\begin{enumerate}
+  		\item Openen met een image viewer
+  		\item Inzoomen links onderaan de rode balk met Danger
+  		\item 192.168.255.134 staat hier geschreven
+  		\end{enumerate}
+  	\item mp3:
+  		\begin{enumerate}
+  		\item Open gaWeg.mp3 met een hex-editor (vb: Bless Hex Editor)
+  		\item Scroll volledig naar beneden
+  		\item Port 8765 staat hier geschreven
+  		\end{enumerate}
+  	\end{enumerate}
+  \item Hints samennemen: telnet 192.168.255.134 8765
+  \item Open terminal en telnet 192.168.255.134 8765
+  \item Brute-forcen van de pincode van 4 cijfers
+  \item Oplossing: 7583
+  \item Oplossing op de site: azernipcmkjsdizaer75348nopve
+\end{enumerate}
+
+\begin{lstlisting}
+#!/usr/bin/env python
+import socket
+import sys
+import re 
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_address = ('192.168.255.134', 8765)
+
+s.connect(server_address)
+
+data = s.recv(250)
+code = ""
+
+try:
+	for i in range(10000):
+		if(re.search("\nPassword correct!", data)):
+			break
+		else:
+                        code = "%04d" % i
+                        s.sendall(code + "\n")
+			#data = ""
+                        data = s.recv(250)
+
+finally:
+	print "Code: ", code
+
+s.close()
+
+Output:
+	Code: 7583
+\end{lstlisting}

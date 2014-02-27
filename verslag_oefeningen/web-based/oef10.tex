@@ -1,0 +1,35 @@
+Deze oefening kan enkel opgelost worden door middel van het schrijven van een brute-force script.
+\begin{lstlisting}
+hashCode = function(s) {
+	return s.split("").reduce(function(a,b) {
+		a = ((a << 5) - a) + b.charCodeAt(0);
+		return a&a
+	}, 0);              
+}
+
+var chars = "abcdefghijklmnopqrstuvwxyz";
+
+function brute(str) {
+	if (str.length < 6) {
+		var copy = str;
+		
+		for (var i =0; i < chars.length; i++) {
+			copy = str;
+			copy += chars.substring(i,i+1);
+			if (hashCode(copy) == 97532594) {
+				console.log(copy);
+			} else {
+				brute(copy);
+			}
+			
+			if (str.length == 0) {
+				console.log("Mogelijkheden met letter " + copy + " voltooid.");
+			}
+		}
+	}
+}
+
+brute("");
+
+Na enkele seconden vinden wij het volgende paswoord: "flups"
+\end{lstlisting}

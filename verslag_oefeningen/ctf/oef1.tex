@@ -1,0 +1,55 @@
+Voorbeeld oplossing:
+\begin{enumerate}
+  \item Open terminal
+  \item telnet 192.168.255.133 4321
+  \item wget http://192.168.255.130/bestanden/hex\_dump
+  \item vim converter.py
+  \item chmod +x converter.py
+  \item python converter.py
+  \begin{enumerate}
+  \item file.bin is de output file
+  \end{enumerate}
+  \item hexdump -C file.bin \textbar  less
+  \begin{enumerate}
+  \item extensie: GIF
+  \end{enumerate}
+  \item mv file.bin file.gif (extensie aanpassen naar .gif)
+  \item xdg-open file.gif (Nice pic!)
+  \item md5sum file.gif
+  \begin{enumerate}
+  \item Oplossing: 9ec40922f1a7e92838ea02d5b742d8d9
+  \end{enumerate}
+\end{enumerate}
+
+\begin{lstlisting}
+import binascii
+
+f1 = open( "hex_dump", "r" )
+tekst = ""
+for line in f1:
+        line = line.replace(' ','')
+        tekst = tekst + ""+ line.rstrip('\n')
+f1.close()
+
+n = 2
+array = []
+array = [tekst[i:i+n] for i in range(0, len(tekst), n)]
+
+# change 4947 to 4749
+n = 2
+array2 = []
+for i in range(0, len(array), n):
+# [0] in [1] steken & omgekeerd
+array2.append(array[i+1])
+array2.append(array[i])
+
+array = ''.join(array2)
+
+bytes = binascii.a2b_hex(''.join(array))
+
+f2 = open ("file.bin","wb")
+
+f2.write(bytes)
+
+f2.close()
+\end{lstlisting}

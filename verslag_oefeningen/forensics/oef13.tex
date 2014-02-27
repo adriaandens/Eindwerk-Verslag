@@ -1,0 +1,59 @@
+Om de data uit de afeelding te halen is men verplicht om een script te schrijven. Het onderstaande script is een voorbeeldscript. Wanneer we het script runnen krijgen een tekst.
+\begin{lstlisting}
+/*
+Based on https://gist.github.com/niw/5963798
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <png.h>
+
+void read_png_file(char*);
+
+int main(int argc, char** argv) {
+	if(argc != 2) {
+		fprintf(stderr, "Usage: %s filename_picture\n", argv[0]);
+		exit(1);
+	}
+
+	FILE *fp = fopen(argv[1], "rb");	
+
+	png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+	png_infop info = png_create_info_struct(png);
+	if(setjmp(png_jmpbuf(png))) abort();
+
+	png_init_io(png, fp);
+
+	png_read_info(png, info);
+	int width = png_get_image_width(png, info);
+	int height = png_get_image_height(png, info);
+
+	png_bytep* row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
+	int x, y;
+	for(y = 0; y < height; y++)
+		row_pointers[y] = (png_byte*) malloc(png_get_rowbytes(png,info));
+
+	png_read_image(png, row_pointers);
+	fclose(fp);
+
+	unsigned char e = 0; int bits_written = 0;
+	for(y = 0; y < height; y++) {
+		png_bytep row = row_pointers[y];
+		for(x = 0; x < width; x++) {
+			e = e << 1;
+			if(row[x] & 1) e++;
+				bits_written++;
+
+			if(bits_written == 8) {
+				printf("%c", e);
+				e = 0; bits_written = 0;
+			}
+		}
+	}
+
+	return 0;
+}
+
+Do you see any Teletubbies in here? Do you see a slender plastic tag clipped to my shirt with my name printed on it? Do you see a little Asian child with a blank expression on his face sitting outside on a mechanical helicopter that shakes when you put quarters in it? No? Well, that's what you see at a toy store. And you must think you're in a toy store, because you're here shopping for an infant named Jeb. (From http://slipsum.com)
+\end{lstlisting}
