@@ -1,0 +1,35 @@
+Een manier om deze oefening op te lossen is door middel van brute-forcen. Dit kan op de website zelf gedaan worden in de console (CTRL + SHIFT + j). Onderstaande script is een voorbeeld oplossing.
+\\\\
+De naam van de afbeeldingen zijn altijd volgens de dezelfde structuur opgeslagen: `cijfer' + `teken' + `teken'.
+\\\\
+Het wachtwoord is 20 tekens lang. Er staatn 2 letters per afbeelding, dus moeten we 10 afbeeldingen vinden in totaal.De eerste 2 zijn al gegeven, dus het script moet beginnen bij 3.(De eerste lus)
+\\\\
+De volgende twee lussen dienen om de alle mogelijke tekens te overlopen. Een lus voor het eerste teken en een lus voor het tweede teken.
+\\\\
+In dit script zal de afbeelding direct in HTML geplaatst worden. Hierdoor zien we onmiddellijk wanneer de volgende 2 letters gevonden zijn.
+\\\\
+In de code van deze website staan divs met class 'uitlijnen', dit kan via Javascript makkelijk aangesproken en uitgebreid worden. Er kan hier ook een ander element op basis van een class of id gebruikt worden.
+\\\\
+Het is mogelijk dat de website dit script niet kan uitvoeren, dan moet men de buitenste for-lus verwijderen en de volgende lijn manueel aanpassen:
+\begin{lstlisting}
+<img src="/bestanden/18/' + i + abc[j] + abc[k] + '.png">'; naar
+	<img src="/bestanden/18/3 + abc[j] + abc[k] + '.png">';
+	<img src="/bestanden/18/4 + abc[j] + abc[k] + '.png">';
+	...
+	<img src="/bestanden/18/10 + abc[j] + abc[k] + '.png">';
+\end{lstlisting}
+
+Uiteindelijk vinden we het volgende wachtwoord: dgv255eifx6xqwfzslwv
+
+\begin{lstlisting}
+var abc = "abcdefghijklmnopqrstuvwxyz123456789";
+
+for (var i = 3; i <= 10; i++) {
+	for (var j = 0; j < abc.length; j++) {
+		for (var k = 0; k < abc.length; k++) {
+			document.getElementsByClassName("uitlijnen")[0].innerHTML += '<img src="/bestanden/18/' + i + 
+				abc[j] + abc[k] + '.png">';
+		}
+	}
+}
+\end{lstlisting}

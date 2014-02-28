@@ -20,3 +20,45 @@
   
   
 \end{enumerate}
+
+\begin{lstlisting}
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]){
+	if(argc != 3){
+		printf("Error: %s <IP-address> <password> required\n", argv[0]);
+		exit(0);
+	}
+
+	if(make_connection(argv[1], argv[2]) == 0){
+		printf("\nMaking connection...\n");
+		printf("====================\n");
+		printf("\nConnection failed!\n");
+		exit(0);
+	}
+}
+
+int make_connection(char *ip, char *pass){
+	char pw[8];
+	int return_val = 0;
+
+	strcpy(pw, pass);
+
+	return return_val;
+}
+
+int gegevens(){
+	printf("\nNSA\n");
+	printf("*********\n");
+	printf("Name Password\n");
+	printf("------- -----------\n");
+	printf("Frans Bauer fRanske123\n");
+	printf("Lorrie Popovich loPo007\n");
+	printf("Hello Kitty yttikolleh\n");
+	printf("Klok Kenluider ringring00\n");
+
+	return(0);
+}
+\end{lstlisting}

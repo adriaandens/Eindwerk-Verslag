@@ -1,3 +1,66 @@
 \begin{enumerate}
   \item 
 \end{enumerate}
+
+\begin{lstlisting}
+#include <dirent.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main(void){
+	leesDir();
+}
+
+int countFiles(){
+	int count = 0;
+	DIR *d;
+	struct dirent *dir;
+	d = opendir(".");
+
+	if (d)
+	{
+		while ((dir = readdir(d)) != NULL)
+		{
+			if(strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
+				count++;
+			}
+		}
+
+		closedir(d);
+	}
+
+	return count;
+
+}
+
+int leesDir(){
+	char filelist[100][50]; // 100 strings van lengte 200
+
+	DIR *d;
+	struct dirent *dir;
+	d = opendir(".");
+
+	int teller = countFiles() - 1;
+	int count = teller;
+
+	if (d)
+	{
+		while ((dir = readdir(d)) != NULL)
+		{
+			if(strcmp(dir->d_name, ".") != 0 && strcmp(dir->d_name, "..") != 0){
+				strcpy(filelist[teller], dir->d_name);
+				teller--;
+			}
+		}
+
+		closedir(d);
+	}
+
+	int i = 0;
+	for (i = 0; i < count + 1; i++)
+		printf("%s\n",filelist[i]);
+
+	return(0);
+}
+\end{lstlisting}
