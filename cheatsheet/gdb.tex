@@ -1,0 +1,42 @@
+\begin{description}
+  \item[gdb -q \textless program\textgreater] \hfill \\
+  Starten gdb voor specifiek programma
+  \item[(gdb) set disassembly-flavor intel] \hfill \\
+  Disassembly naar intel zetten
+  \item[(gdb) disassemble main] \hfill \\
+  Disassemble de main functie
+  \item[(gdb) break main] \hfill \\
+  Breakpunt zetten bij het begin van de main-functie
+  \item[(gdb) break \textless linenumber\textgreater] \hfill \\
+  Breakpunt zetten op een bepaalde lijn
+  \item[(gdb) run \textless commandline args\textgreater] \hfill \\
+  Starten van de uitvoering van het programma
+  \item[(gdb) info registers] \hfill \\
+  Informatie over de registers
+  \item[(gdb) info register eip] \hfill \\
+  Informatie over de Instruction Pointer register
+  \item[(gdb) x/o \$adres] \hfill \\
+  Octale weergave van het geheugen op adres \$adres
+  \item[(gdb) x/x \$eip] \hfill \\
+  Hexadecimale weergave van het geheugen op adres \$eip (Instruction Pointer)
+  \item[(gdb) x/u \$eip] \hfill \\
+  Decimale weergave van het geheugen op adres \$eip (Instruction Pointer)
+  \item[(gdb) x/t \$eip] \hfill \\
+  Binaire weergave van het geheugen op adres \$eip
+  \item[(gdb) x/s ptr] \hfill \\
+  Toon de inhoud van `ptr' als een leesbare string
+  \item[(gdb) x/i \$eip] \hfill \\
+  Weergeven van de geheugeninhoud waarnaar eip wijst
+  \item[(gdb) x/2i \$adres] \hfill \\
+  Weergeven van de instructie achter de geheugeninhoud waarnaar eip wijst
+  \item[(gdb) cont(inue)] \hfill \\
+  Uitvoering vervolledigen. Naar de volgende breakpoint of wanneer er geen breakpoints meer zijn, naar het einde van de uitvoering
+  \item[(gdb) bt] \hfill \\
+  Backtrace de stack tijdens de uitvoering
+  \item[(gdb) bt full] \hfill \\
+  Toont ook de variabelen
+  \item[(gdb) next i(nstruction)] \hfill \\
+  Doorgaan naar de volgende instructie  
+  \item[(gdb) print ptr] \hfill \\
+  Toon de inhoud van `ptr' als een leesbare string
+\end{description}
