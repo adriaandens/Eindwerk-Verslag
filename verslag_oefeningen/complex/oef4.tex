@@ -1,3 +1,35 @@
 \begin{enumerate}
-\item 
+\item Rechtermuisknop op `teller' seconden en Inspect element
+\item Open console tab, en typ: teller=123456
+\item typ het wachtwoord over
+\item Er verschijnt een link naar de volgende challenge
+\item Oh nee, uw toegang wordt geblokkeerd.
+\item Bij het uitproberen van verschillende User-Agents zien we dat geen enkele toegelaten wordt
+\item We veranderen de User-Agent naar een lege of " " User-Agent. Succes!
+\item Bij het controleren van de bron-code vinden we een afbeelding van 1x1 px terug.
+\item Achter deze afbeelding zit een link naar redirect.php
+\item We kunnen deze pop-up omzeilen door middel van het vinden van een wachtwoord of door direct naar de window.location te surfen.
+\begin{enumerate}
+\item Verander in de view-source de /hellokittyworldpartygame.php naar /redirect.php
+\item Bovenaan de pagina vinden we een link naar variables.js
+\item Hier vinden we de var check = "echohelloworld";
+\item Het ingeven van dit paswoord zal ons naar de download.php pagina sturen
+\end{enumerate}
+\begin{enumerate}
+\item In de view-source van redirect.php vinden we de window.location.
+\item download.php ingeven zal ons direct naar de juiste pagina sturen
+\end{enumerate}
+\item Op deze pagina vinden we een .dd file.
+\item Bij het openen van deze image vinden we niets terug.
+\item Misschien zijn er wel bestanden verwijderd? Dit controleren we m.b.v. fls -r link.dd
+\item Succes! link.png werd gevonden.
+\item Met behulp van `icat usb.dd 4 \textgreater out.png' halen we deze foto terug.
+\item Bij het openen van out.png krijgen we de volgende link: ikkendelinkvanbuiten.php
+\item Door een sql-injectie kunnen we inloggen op deze pagina als admin
+\item admin' or `1'=`1 is het commando dat we ingeven
+\item Ga nu naar de sql-omgeving d.m.v. het klikken op de link
+\item Bij het inspecteren van deze pagina zien we een SQL-query bij de print-knop.
+\item Inspect Element op de print-knop en geef de juiste SQL-instructie op.
+\item SELECT adres FROM sqlOmgeving WHERE naam='Mark Zuckerberg'
+\item Paswoord: hitman
 \end{enumerate}
