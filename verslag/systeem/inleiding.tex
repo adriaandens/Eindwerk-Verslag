@@ -19,10 +19,61 @@ Apache2\cite{apache} werd hier geïnstalleerd.
 Door middel van crontab zal het script ``/root/sync\_website.sh'' elke minuut gaan controleren of er een nieuwe git-commit is geweest. Een positieve git-commit wijst op een lokale aanpassing van de website. Deze lokale aanpassing zal door het script worden overgenomen worden in /var/www. Hierdoor zal de webserver bijna onmiddellijk gesynchroniseerd worden met de lokale website versie.
 
 Een tweede script (/root/sync\_oef.php), dat opgeroepen wordt in het sync\_website.sh script, zal ervoor zorgen dat iedere gebruiker het juiste aantal oefeningen in zijn/haar persoonlijk overzicht heeft staan.
+
+De website is opgebouwd aan de hand van het framework van het vak ``Dynamische Websites''. We hebben voor dit framework gekozen omdat het hierdoor makkelijk is om nieuwe zaken te integreren en de site te beveiligen.
+
+Voor het design van de site hebben we onze eigen CSS geschreven en geprobeerd om deze responsive te maken zodat, indien de website ooit online gaat staan, deze ook op tablets zou functioneren.
+
+De site is onderverdeeld in vier delen: Oefeningen, Exploits, Downloadables en links.
+
+Bij oefeningen kunnen de gebruikers kiezen tussen enkele categorieën:
+\begin{itemize}
+\item Web-based: bevat oefeningen waar de gebruiker de browser moet hacken. Dit zijn oefeningen op SQL injection, cookie tampering, XSS, \ldots
+\item Memory based: bestaat uit verschillende buffer flow oefeningen die gecontrolleerd worden aan de hand van openVZ containers.
+\item Forensics: de gebruiker moet in deze categorie wachtwoorden terug vinden die op verschillende manieren verborgen zijn.
+\item Encryptie: bevat oefeningen waarbij de gebruiker wachtwoorden die op verschillende manieren versleuteld zijn moet decrypteren.
+\item Trivia: deze category bestaat uit vragenreeksen van 10 vragen. Het grootste deel van de vragen komt uit de examenwiki zodat de studenten ook de theoretische kant goed kunnen inoefenen.
+\item Capture the flag: deze categorie bevat capture the flag oefeningen waarbij de gebruiker bepaalde opdrachten moet voltooien.
+\item Complex: hierin bevinden oefeningen die een combinatie zijn van oefeningen uit de andere categorieën. Deze oefeningen staan op apparte sites en bevinden zich dus niet meer in het framework vermits ze hierdoor veel meer vrijheden hebben, wat noodzakelijk was.
+\end{itemize}
+
+Exploits bevat enkele tutorials en ook een demo formulier voor e-mailspoofing.
+
+Downloadables bevat downloadbare omgevingen/oefeningen die de gebruiker op zijn computer kan oplossen.
+
+In Links staan enkele andere CTF sites en andere nuttige sites in verband met beveiliging.
+
+Verder bevindt zich op de site een highscore pagina, een overzicht van de gemaakte oefeningen met achievements, een registratie pagina, een verborgen konami pagina, een speciale error pagina en een settings pagina.
 \subsection{SQL (131)}
 Deze container draait Debian Wheezy.\\
 MySQL werd heir geinstalleerd.
 
 De keuze om de website en de SQL-server in een aparte container te draaien is om de veiligheid van beide containers te garanderen.
+
+De database bestaat uit twee verschillende schema’s:
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{systeem/db1.jpg}
+\end{figure}
+	\begin{itemize}
+	\item aantal\_oefeningen: bevat het aantal oefeningen dat elke soort heeft. Hierdoor krijgen de gebruikers een achievement als ze alle oefeningen van een categorie hebben opgelost en wordt het totaal aantal oefeningen berekend, \ldots
+	\item downloads: hierin bevinden de downloadbare bestanden zich zodat deze automatisch uitgelezen kunnen worden.
+	\item Encryptie: in deze tabel worden de encryptie oefeningen bewaard. Hierdoor kunnen deze makkelijk toegevoegd worden.
+	\item Gebruikers: hierin staan alle users met een sha1 gehasht en gesalt passwoord zodat de wachtwoorden vrij veilig zijn.
+	\item Resultaten: hierin staat voor elke gebruiker bij elke oefeningensoort een string. Deze string bevat `j’, `n’ en `-‘ ). Indien er een `j’ staat heeft de gebruiker de oefening opgelost, bij een `n’ nog niet. Wanneer er een – staat heeft de categorie nog niet zoveel oefeningen en kan dit `-‘ dus gereplaced worden met een `j’ of een `n’ wanneer deze wel bestaat. We hebben hiervoor gekozen omdat na de controle van de bufferoverflow oefening in de openVZ container met één regex de feedback toegevoegd kan worden aan de database.
+	\item trivia: hierin staan alle vragenreeksen zodat de vragen mooi per 10 verdeeld worden.
+	\item Trivia\_vragen: hierin staan alle quiz vragen en de oefeningen reeks waarbij ze behoren.
+	\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.5]{systeem/db2.jpg}
+\end{figure}
+	\begin{itemize}
+	\item hellokittyworld: deze tabel wordt gebruikt voor SQL injection bij de vierde complexe oefening.
+	\item Sqlomgeving: deze tabel wordt gebruikt voor SQL injection bij de vierde complexe oefening.
+	\item Users: deze tabel wordt gebruikt voor SQL injection bij enkele web-based oefeningen en bij de tweede complexe oefening.
+	\end{itemize}
+
+
 \subsection{Coderunner (132)}
 NOG UITLEG VAN ADRIAAN OVER DIT SYSTEEM
