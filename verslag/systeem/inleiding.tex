@@ -1,0 +1,28 @@
+Meneer Geens heeft ons een fysieke server aangeboden die wij volledig geconfigureerd hebben.
+
+De eerste problemen onstonden al na enkele minuten. Deze server kon namelijk niet booten vanaf een USB, dit terwijl er wel degelijk 4 poorten aanwezig zijn. Hierna hebben we Debian Wheezy\cite{wheezy} ge\"installeerd met behulp van een bootable CD. Deze installatie verliep zonder verdere problemen.
+
+Na de installatie hebben wij de sources van OpenVZ\cite{openvz} toegevoegd en OpenVZ ge\"installeerd.
+Ook deze installatie verliep van een leie dakje.
+
+Hierna hebben wij een IP-adressen range gekozen voor de verschillende services die moeten draaien op deze server. OpenVZ biedt ons de mogelijkheid verschillende containers\cite{openvzcontainers} te maken die bovenop deze OpenVZ omgeving draaien. Elke service krijgt daarom een eigen container met Debian Wheezy, behalve de container die instaat voor de controle van de ``Memory-based'' oefeningen. Deze service zal draaien onder Ubuntu 7.10\cite{openvzubuntu}.
+
+De keuze voor Ubuntu 7.10 is enkel en alleen omwille van de gcc\cite{gcc} versie (gcc-3.3). Deze gcc-versie houdt nog geen rekening met stack-protection waardoor onze exploit-oefeningen juist gaan functioneren.
+
+\subsection{Host (129)}
+NOG UITLEG VAN ADRIAAN OVER DIT SYSTEEM
+
+\subsection{Website (130)}
+Deze container draait Debian Wheezy.\\
+Apache2\cite{apache} werd hier geïnstalleerd.
+
+Door middel van crontab zal het script ``/root/sync\_website.sh'' elke minuut gaan controleren of er een nieuwe git-commit is geweest. Een positieve git-commit wijst op een lokale aanpassing van de website. Deze lokale aanpassing zal door het script worden overgenomen worden in /var/www. Hierdoor zal de webserver bijna onmiddellijk gesynchroniseerd worden met de lokale website versie.
+
+Een tweede script (/root/sync\_oef.php), dat opgeroepen wordt in het sync\_website.sh script, zal ervoor zorgen dat iedere gebruiker het juiste aantal oefeningen in zijn/haar persoonlijk overzicht heeft staan.
+\subsection{SQL (131)}
+Deze container draait Debian Wheezy.\\
+MySQL werd heir geinstalleerd.
+
+De keuze om de website en de SQL-server in een aparte container te draaien is om de veiligheid van beide containers te garanderen.
+\subsection{Coderunner (132)}
+NOG UITLEG VAN ADRIAAN OVER DIT SYSTEEM

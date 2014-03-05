@@ -1,0 +1,142 @@
+\subsection{Could not load host key: /etc/ssh/ssh\_host\_ecdsa\_key}
+\begin{lstlisting}
+Oplossing: sudo ssh-keygen -t ecdsa -f /etc/ssh/ssh_host_ecdsa_key -N 
+\end{lstlisting}
+
+\subsection{Opzetten containers}
+Apache:
+\begin{lstlisting}
+root@debian:~# /etc/init.d/apache2 restart
+[....] Restarting web server: apache2apache2: apr_sockaddr_info_get() failed for debian
+apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
+... waiting apache2: apr_sockaddr_info_get() failed for debian apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
+. ok 
+\end{lstlisting}
+    
+oplossing: /etc/hosts aanpassen:
+\begin{lstlisting}
+127.0.0.1          debian debian.nwlab.be localhost website localhost.localdomain
+192.168.255.130    debian debian.nwlab.be localhost website localhost.localdomain
+\end{lstlisting}
+   
+Error is nu:
+\begin{lstlisting}
+root@debian:/etc/apache2# /etc/init.d/apache2 restart
+[....] Restarting web server: apache2apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
+... waiting apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
+. ok 
+\end{lstlisting}
+    
+/etc/apache2/apache2.conf, regel bijzetten: ServerName localhost
+
+\subsection{Initial config}
+\begin{lstlisting}
+update-rc.d -f apache2 remove
+echo "Naampje" > /etc/hostname
+vi /etc/hosts (en zet daarin "Naampje" bij 127.0.0.1)
+\end{lstlisting}
+    
+\subsection{Multiple users die containers aanmaken}
+\begin{lstlisting}
+Locked by: pid 57388, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+Fail. (2304)
+Locked by: pid 57388, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+ssh: connect to host 192.168.255.136 port 22: No route to host
+lost connection
+Locked by: pid 57388, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+Fail. (2304)
+Locked by: pid 57388, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+ssh: connect to host 192.168.255.136 port 22: No route to host
+lost connection
+Locked by: pid 57388, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+Locked by: pid 57388, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+Locked by: pid 57388, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+Locked by: pid 57388, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+ssh: connect to host 192.168.255.136 port 22: Connection refused
+lost connection
+ssh: connect to host 192.168.255.136 port 22: No route to host
+lost connection
+ssh: connect to host 192.168.255.136 port 22: No route to host
+lost connection
+Locked by: pid 58387, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+Locked by: pid 58387, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+Locked by: pid 58387, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+Locked by: pid 58387, cmdline vzctl create 136 --ostemplate runcode
+Container already locked
+Warning: Permanently added '192.168.255.136' (RSA) to the list of known hosts.
+Warning: Permanently added '192.168.255.136' (RSA) to the list of known hosts.
+^C2014/02/27-11:24:01 Server closing!
+\end{lstlisting}
+    
+1 user die connect (output):\\
+r0257589@GT-P323-29:~\$ telnet 192.168.255.132 12345
+\begin{lstlisting}
+Trying 192.168.255.132...
+Connected to 192.168.255.132.
+Escape character is '^]'.
+userid: 10
+oef: 5
+code:
+#include <stdio.h>
+         
+int main() {
+     printf("Adriaan is zoooooooooooooooooooooo slim");
+}
+.....
+1
+Get new container...
+Launched container met CTID BEGIN launchve! <-- Die BEGIN is extra output normaal stuurt die enkel de laatste regel door, "136" dus...
+Actieve containers: 131 130 134 132 133
+Output make_container in launchve: Executing "sudo vzctl create 136 --ostemplate runcode"
+Creating container private area (runcode)
+Performing postcreate actions
+CT configuration saved to /etc/vz/conf/136.conf
+Container private area was created
+Executing "sudo vzctl set 136 --ipadd 192.168.255.136 --nameserver 192.168.255.254 --save"
+CT configuration saved to /etc/vz/conf/136.conf
+Made container with CTID 136.
+      
+Output vzctl start in launchve: Starting container...
+Container is mounted
+Adding IP address(es): 192.168.255.136
+Setting CPU units: 1000
+Container start in progress...
+
+136
+\end{lstlisting}
+    
+
+\subsection{SSH probleem :'(}
+\begin{lstlisting}
+compile(): ssh -vvvo "StrictHostKeyChecking no" -i /home/adri/.ssh/launchve 
+runcode@192.168.255.138 gcc-3.3 /runcode/code.c 2>&1
+Output ssh: OpenSSH_6.0p1 Debian-4, OpenSSL 1.0.1e 11 Feb 2013
+debug1: Reading configuration data /home/adri/.ssh/config
+debug1: /home/adri/.ssh/config line 1: Applying options for 192.168.255.*
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 19: Applying options for *
+debug2: ssh_connect: needpriv 0
+debug1: Connecting to 192.168.255.138 [192.168.255.138] port 22.
+debug1: connect to address 192.168.255.138 port 22: Connection refused
+ssh: connect to host 192.168.255.138 port 22: Connection refused
+      
+-------
+      
+adri@Exploit:~$ ssh -p 22543 adri@192.168.255.129
+Warning: Permanently added '[192.168.255.129]:22543' (ECDSA) to the list of known hosts.
+PTY allocation request failed on channel 0
+Connection to 192.168.255.129 closed.
+      
+-------
+\end{lstlisting}

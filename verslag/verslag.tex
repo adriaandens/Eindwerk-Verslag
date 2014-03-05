@@ -7,6 +7,7 @@
 \usepackage{listings}
 \usepackage{parskip}
 \usepackage{textcomp}
+\usepackage{hyperref}
 
 \definecolor{lbcolor}{rgb}{0.85,0.85,0.85}
 \definecolor{LinkColor}{rgb}{0,0,0.5}
@@ -30,7 +31,7 @@ backgroundcolor=\color{lbcolor}
 
 \begin{document}
 
-\title{Beveiligingssite: Cheatsheet}
+\title{Beveiligingssite: Verslag Oefeningen}
 \date{7 maart 2014}
 \author{Adriaan Dens (r0257589)\\
 	Jan Weyens (s0205128)\\
@@ -40,12 +41,36 @@ backgroundcolor=\color{lbcolor}
 
 \maketitle
 
-\chapter{GCC}
-\input{cheatsheet/gcc.tex}
+\tableofcontents
+
+\chapter{Inleiding}
+\input{inleiding/inleiding.tex}
 \newpage
 
-\chapter{GDB}
-\input{cheatsheet/gdb.tex}
+\chapter{Het systeem}
+\input{systeem/inleiding.tex}
+
+\chapter{Werkverdeling}
+\input{werkverdeling/inleiding.tex}
+\newpage
+
+\chapter{Problemen}
+\input{problemen/inleiding.tex}
+
+\section{Container of VM}
+\input{problemen/container_vm.tex}
+
+\section{OpenVZ}
+\input{problemen/openvz.tex}
+
+\section{Exploits uitvoeren}
+\input{problemen/exploits.tex}
+
+\section{Forensics}
+\input{problemen/forensics.tex}
+
+\section{Problemen website}
+\input{problemen/website.tex}
 
 \bibliography{bronnen}
 

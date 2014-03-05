@@ -1,0 +1,159 @@
+De volgende scripts staan in voor de synchronisatie van lokale website met de publieke website door middel van git.
+\subsection{Webserver (192.168.255.130)}
+\begin{lstlisting}
+#!/bin/bash
+#      
+#	/root/sync_website.sh
+#	----------------------
+#
+#	Dit eenvoudig script zal ervoor zorgen dat de git-commits,
+#	met 1 minuut vertraging, worden doorgevoerd naar de website.
+#
+#	Met behulp van crontab loopt dit script elke minuut.
+#
+#	Eerst en vooral wordt er gekeken naar de /home/quinten/Eindwerk_Website
+#	folder. We voeren hier het commando: "git pull" uit. Wanneer de map 
+#	reeds up-to-date is stopt het script met uitvoeren.
+#	Het up-to-date zijn van deze map wil zeggen dat er geen nieuwe commits
+#	zijn geweest sinds de laatste commit, dus de /var/www-map is nog steeds
+#	de nieuwste versie.
+#
+#	Wanneer "git pull" niet up-to-date is, en er dus aanpassingen zijn
+#	doorgevoerd, moeten wij de website up-to-date brengen.
+#
+#	Dit up-to-date brengen zal gebeuren door middel van rsync.
+#	Het commando "rsync -r --delete ..." zal ervoor zorgen dat de
+#	/var/www map gesyncroniseerd wordt met de 
+#	/home/quinten/Eindwerk-Website map.
+#
+#	Omdat lokaal aan deze website gewerkt wordt bevat het config.php bestand
+#	de lokale gegevens in plaats van de server gegevens. Daarom houden zal de
+#	juiste config-file bijgehouden worden in een /root/www-backup map.
+#	Na iedere succesvolle "git pull" zal deze config.php file dan ook de 
+#	lokale config.php file overschrijven in /var/www/application/.
+#
+#	Door het gebruik van rsync zal de .git map ook gesynchroniseerd worden.
+#	Dit mag niet. Deze .git map zal in dit script verwijderd worden van de 
+#	/var/www map.
+#
+#	Database dumps worden ook bijgehouden in git. Deze dienen voor eventuele
+#	recovery van de databases. Rsync zal ook deze dumps synchroniseren met de
+#	/var/www map. We willen niet dat de gebruikers aan deze dumps kunnen, dus
+#	worden deze verwijderd uit de /var/www map.
+#
+#	Onze hacking.ova zal bij iedere rsync verwijderd worden uit de /var/www
+#	map. Hierdoor zullen wij dit bestand ook bijhouden in de /root/www-backup map
+#	en opnieuw importeren wanneer nodig.
+#
+#	Na het importeren worden alle rechten juist gezet door middel van het 
+#	chown -R quinten:www-data /var/www/ commando.
+#
+#	Tenslotte voeren we het /root/sync_oef.php script uit om ervoor te zorgen
+#	dat iedere gebruiker bij de overzicht-pagina het juiste aantal oefeningen
+#	zal zien.
+   
+cd /home/quinten/Eindwerk-Website
+    
+if  `git pull` =~ "up-to-date" 
+then
+# git is up-to-date
+	exit 0;
+fi
+    
+# git is not up-to-date
+# sync /home/quinten/Eindwerk-Website with /var/www/
+rsync -r --delete /home/quinten/Eindwerk-Website/ /var/www/
+    
+# Restore current config
+cp /root/www_backup/config.php /var/www/application/
+    
+# Remove the .git directory
+rm -r /var/www/.git
+    
+# Remove Database dumps
+rm -r /var/www/database\ dumps/
+    
+# Add hacking.ova to /var/www/bestanden/
+cp /root/www_backup/hacking.ova /var/www/bestanden/
+    
+# Rights back to quinten
+chown -R quinten:www-data /var/www/
+    
+# sync user overzicht
+php -f /root/sync_oef.php
+\end{lstlisting}
+
+\subsection{SQL-server (192.168.255.131)}
+\begin{lstlisting}
+#
+#	/root/sync_oef.php
+#	------------------
+#
+#	Dit script zal gebruikt worden om het aantal oefeningen in het  persoonlijk 
+#	overzicht per gebruiker te updaten.
+#
+#	Eerst wordt er een verbinding gemaakt met de MySQL-server op IP-adres
+#	192.168.255.131 met de "hacksite" databse met de volgende 
+#	credentials: quinten & netniuqvda.
+#
+#	Of een gebruiker de oefening al dan niet opgelost heeft wordt als volgt
+#	bijgehouden in de database per gebruiker per categorie (vb: web-based): 
+#		"jjjjnnnnn------------".
+#			j = oefening is reeds opgelost
+#			n = oefening is nog niet opgelost
+#			j + n = totaal aantal oefeningen die op de site staan
+#			- = deze oefening bestaat nog niet
+#
+#	De tabel aantal_oefeningen zal voor iedere categorie het aantal
+#	oefeningen bijhouden.
+#
+#	Het script zal de string "jjjnnnn----..." verder aanvullen met "n" tot
+#	de som van het aantal "j" en "n" gelijk is aan de waarde die terug-
+#	gevonden wordt in de aantal_oefeningen tabel.
+    
+<?php
+    
+   	mysql_connect("192.168.255.131", "quinten", "netniuqvda", "hacksite");
+    
+   	$query = "
+   		SELECT *
+   		FROM hacksite.aantal_oefeningen
+   	";
+          
+    $result = mysql_query($query);
+   	$oefeningen = array();
+    
+   	while ($oefening = mysql_fetch_assoc($result)) {
+   		$oefeningen[$oefening['soort']] = $oefening['aantal'];
+   	}
+    
+    $query = "
+    	SELECT *
+    	FROM hacksite.resultaten
+    ";
+         
+    $result = mysql_query($query);
+         
+    while ($resultaten = mysql_fetch_assoc($result)) {
+    	$gebruikersnaam = $resultaten['gebruikersnaam'];
+    
+    	foreach ($oefeningen as $soort => $aantal_oefeningen) {
+    		$reeks = $resultaten[$soort];
+    
+    		for ($i = 0; $i < $aantal_oefeningen; $i++) {
+    			if ($reeks[$i] == '-') {
+    				$reeks[$i] = 'n';
+    			}
+    		}
+    
+    		$query = "
+    			UPDATE hacksite.resultaten
+    			SET " . $soort . " = '" . $reeks . "'
+    			WHERE gebruikersnaam = '" . $gebruikersnaam . "';     
+    	    ";
+         
+    		mysql_query($query);
+    	}
+	}
+?>
+\end{lstlisting}
