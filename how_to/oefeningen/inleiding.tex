@@ -1,0 +1,168 @@
+\subsection{Web-based} 
+\begin{enumerate}
+\item `web.php' in de map `application\textbackslash view\textbackslash oefeningen'
+	\begin{enumerate}
+	\item \$beschrijving = \$array ( \ldots ~, n =\textgreater ``Beschrijving oefening'',);
+	\end{enumerate}
+\item Bestand `n.php' aanmaken in `application\textbackslash view\textbackslash oefeningen\textbackslash web-oefeningen'
+	\begin{enumerate}
+	\item Dit bestand wordt de `View' van de oefening
+	\end{enumerate}
+\item `OefeningenController.php' in de map `application\textbackslash controller'
+	\begin{enumerate}
+	\item `function oplossing(\$soort, \$nummer)'
+	\item `if (\$soort == `web-based')'
+	\item Keuze 1
+		\begin{enumerate}
+		\item \$oplossing = \$array ( \ldots ~, n =\textgreater ``oplossing'',);
+		\end{enumerate}
+	\item Keuze 2 (Niet controleerbaar met wachtwoord)
+		\begin{enumerate}
+		\item `if (\$nummer == n) { voeg code hier in }'
+		\item Zelf de controle schrijven
+		\end{enumerate}
+	\end{enumerate}
+\item `aantal\_oefeningen' tabel in de database `hacksite'
+\item Entry `web', het aantal=`n' veranderen naar `n+1'
+\end{enumerate}
+
+
+\subsection{Memory-based} 
+\begin{enumerate}
+\item `memory.php' in `application\textbackslash view\textbackslash oefeningen'
+\item Toevoegen: \$beschrijving = \$array ( \ldots , n =\textgreater ~``beschrijving oef''
+\item In bestand `memory\_oefening.php'
+\item \$opgave = \$array ( \ldots , n =\textgreater ~`\textless p class=``uitlijnen''\textgreater Opgavetekst\textless /p\textgreater',);
+\item \$bestand = \$array ( \ldots , n =\textgreater ~`link naar bestand',);
+\item `OefeningenController.php' in `application\textbackslash controller'
+\item `function oplossing(\$soort, \$nummer)'
+\item Bij `if (\$soort == ``memory'')' het volgende toevoegen:
+\item \$type = \$array (\ldots ,n =\textgreater X',); (x = typenr)
+\item Typenr kan het volgende zijn:
+	\begin{enumerate}
+	\item args
+		\begin{enumerate}
+		\item Oefening kan opgelost worden door enkel argumenten mee te geven
+		\end{enumerate}
+	\item code
+		\begin{enumerate}
+		\item Gebruiker moet zelf code schrijven om oefening op te lossen
+		\end{enumerate}
+	\end{enumerate}
+\item `aantal\_oefeningen' tabel in `hacksite' database:
+\item Aanpassen van de entry `memory', aantal=`n' naar `n+1'
+\end{enumerate}
+
+\subsection{Forensics} 
+\begin{enumerate}
+\item Bestand `OefeningenController.php' uit de map `application\textbackslash controller'
+\item `function forensics(\$oefening = 0)'
+\item `\$tips = \$array (\ldots ,n =\textgreater ~`[`tip1'', ``tip2'']',);
+\item In `function oplossing(\$soort, \$nummer)' bij `if (\$soort == ``forensics'')'
+\item \$oplossingen = \$array ( \ldots ,n =\textgreater ``oplossing'',);
+\item `forensics.php' in `application\textbackslash view\textbackslash oefeningen'
+\item \$beschrijving = \$array ( \ldots ,n =\textgreater ~``beschrijving'',); toevoegen
+\item  In `forensics\_oefening.php' het volgende toevoegen:
+\item \$opgave = \$array ( \ldots , n =\textgreater ~`\textless p class=``vet''\textgreater Opgave\textless /p\textgreater',);
+\item Bij `aantal\_oefeningen' tabel in `hacksite' database
+\item Entry `forensics', het aantal=`n' naar `n+1' aanpassen
+\end{enumerate}
+
+\subsection{Malware} 
+\begin{enumerate}
+\item `malware.php' in `application\textbackslash view\textbackslash oefeningen'
+\item \$beschrijvingen = \$array ( \ldots , n =\textgreater ``beschrijving'',);
+\item In bestand `malware\_oefening.php'
+\item \$opgave = \$array = ( \ldots , n =\textgreater ` \textless p class=``vet''\textgreater titel opgave.\textless /p\textgreater \textless p\textgreater Uitleg opgave \textless /p\textgreater',);
+\item `OefeningenController.php' in `application\textbackslash controller'
+\item In `function oplossing(\$soort, \$nummer)' bij `if (\$soort == ``malware'')'
+\item \$oplossingen = \$array ( \ldots , n =\textgreater ~``oplossing'',);
+\item Bij `aantal\_oefeningen' tabel in `hacksite' database
+\item Bij de entry `malware' het aantal = `n' aanpassen naar `n+1'
+\end{enumerate}
+
+\subsection{Encryptie} 
+\begin{enumerate}
+\item `encryptie' tabel in `hacksite'
+\item Lijn toevoegen:
+	\begin{enumerate}
+	\item id = `n'
+	\item opgave = `opgave'
+	\item tips = `tip1'', ``tip2',
+	\item oplossing = `oplossing'
+	\item beschrijving = `beschrijving'
+	\item extra=`iets extra dat de oefening nodig heeft (vb: afbeelding link)'
+	\item `aantal\_oefeningen' tabel in `hacksite' aanpassen, `encryptie' aantal aanpassen naar `n+1'
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Trivia categorie} 
+\begin{enumerate}
+\item `trivia' tabel in 'hacksite'
+\item Lijn invoegen
+	\begin{enumerate}
+	\item id = `n'
+	\item beschrijving = `Vragenreeks n'
+	\end{enumerate}
+\item `aantal\_oefeningen' tabel in `hacksite' aanpassen n+1 bij de entry `trivia'
+\end{enumerate}
+
+\subsection{Trivia vragen} 
+\begin{enumerate}
+\item `trivia\_vragen' tabel in `hacking' database
+\item lijn toevoegen
+	\begin{enumerate}
+	\item id=`n' (= oefnummer in reeks)
+	\item trivia\_id=`n' (= gewenste reeks)
+	\item keuzes=`keuze1'', ``keuze n'
+	\item oplossing=`juiste keuze'
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Capture the flag}
+\begin{enumerate}
+\item `ctf.php' in `application\textbackslash view\textbackslash oefeningen'
+\item \$beschrijvingen = \$array ( \ldots , n =\textgreater ~``beschrijving'',
+\item Lijn toevoegen in: `ctf\_oefeningen.php'
+\item \$beschrijvingen = \$array ( \ldots , ‘ \textless p class=``uitlijnen''\textgreater Uitleg opgave.\textless /p\textgreater \textless p Uitleg opgave \textless /p\textgreater \textless p class=``vet uitlijnen''\textgreater Opgave\textless /p\textgreater \textless p\textgreater  bestand link\textless /p\textgreater ',',
+\item `OefeningenController.php' in `application\textbackslash controller'
+\item `function oplossing(\$soort, \$nummer)' toevoegen:
+\item `if (\$soort = ``ctf'') in de oplossingen array n =\textgreater ``oplossing'','
+\item `aantal\_oefeningen' tabel in `hacksite' aanpassen n+1 bij de entry `ctf'
+\end{enumerate}
+
+\subsection{Complex}
+\begin{enumerate}
+\item `complex.php' in `application\textbackslash view\textbackslash oefeningen'
+\item \$beschrijvingen = \$array( \ldots , n =\textgreater ~`\textless p class=``uitlijnen''\textgreater Uitleg opgave.\textless /p\textgreater ~\textless p\textgreater Uitleg opgave \textless /p\textgreater,
+\item \$urls = \$array ( \ldots , n =\textgreater ~`/complex/'. \$this-\textgreater oefening. `/',
+\item De tips: \$oplossingen = \$array ( \ldots , 1 =\textgreater ~``\textless li\textgreater tip\textless /li\textgreater'',);
+\item `OefeningenController.php' in `application\textbackslash controller'
+\item `function oplossing(\$soort, \$nummer)
+\item Toevoegen: `if (\$soort == ``complex'') in de oplossingen array n =\textgreater ``oplossing'',
+\item Map `n' aanmaken in `complex' (is de omgeving van de oefening)
+\item `aantal\_oefeningen' tabel in `hacksite' bij de entry `ctf' het aantal verhogen (n + 1)
+\end{enumerate}
+
+\subsection{Tutorial} 
+\begin{enumerate}
+\item `n.php' in `application\textbackslash view\textbackslash toturials'
+\item `index.php' in dezelfde map: `n' toevoegen
+	\begin{enumerate}
+	\item \$titel = \$array( \ldots ~n =\textgreater ``titel / beschrijving'',);
+	\end{enumerate}
+\end{enumerate}
+
+\subsection{Downloadable}
+\begin{enumerate}
+\item `downloads' tabel in `hacksite' database
+\item Entry toevoegen
+\item id=`n', titel=`titel', description=`beschrijving downloadable', link=`link naar locatie'
+\end{enumerate}
+
+\subsection{Link}
+\begin{enumerate}
+\item `links.php' in `application\textbackslash view\textbackslash \_partials'
+\item Lijn toevoegen in: \textless ul\textgreater
+\item \textless li\textgreater \textless img src=``/images/link\_icon.png'' width=``10'' height=``10''\textgreater \textless a href=``link naar pagina''\textgreater naam van site\textless /li\textgreater \textless/a\textgreater 
+\end{enumerate}

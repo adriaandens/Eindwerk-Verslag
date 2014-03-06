@@ -1,6 +1,6 @@
 Voor de oefeningen over exploits in gecompileerde programma's willen we nakijken of de student succesvol het programma heeft kunnen exploiten. Hiervoor laten we toe dat de student zijn C code uploadt via de website waarna het zal nagekeken worden door een intern script.\\
 \\
-De vraag is natuurlijk hoe je dit veilig kunt doen. De student kan immers schrijven wat hij wil in het programma dat hij uploadt. Oplossingen hiervor zijn \emph{Operating System level Virtualization} of Containers en volledige virtualisatie of Virtuele Machines.
+De vraag is natuurlijk hoe je dit veilig kunt doen. De student kan immers schrijven wat hij wil in het programma dat hij uploadt. Oplossingen hiervoor zijn \emph{Operating System level Virtualization} of Containers en volledige virtualisatie of Virtuele Machines.
 
 \subsection{Containers of VMs}
 Het verschil tussen beiden is dat bij een OS-level virtualisatie de containers gebruik maken van de kernel van de host terwijl er bij virtuele machines een strikte scheiding is tussen twee machines; elk gebruikt zijn eigen kernel.\\
@@ -9,7 +9,7 @@ Het voordeel van virtuele machines is daardoor duidelijk, je kan namelijk een Wi
 \\
 Onze voorkeur gaat hierdoor uit naar OS-level virtualisatie omdat we enkel Linux machines nodig hebben en omdat we (zeer) snel een nieuwe container willen kunnen bouwen, gebruiken en dan terug verwijderen. Bovendien verwachten we (na\"ief?) niet dat veel studenten in staat zullen zijn om uit de Container te breken indien er zich zo'n exploits bevinden in de gebruikte software. Hierdoor lijken de nadelen van volledige virtualisatie niet op te wegen tegen de voordelen.\\
 \\
-Er zijn enkele verschillende praktische implementaties van OS-level virtualisatie, ik bespreek hieronder de meest relevante voor onze probleemstelling. Chroots worden bijvoorbeeld niet besproken omdat je hiermee geen limitaties kunt opleggen voor geheugen- en cpugebruik.
+Er zijn enkele verschillende praktische implementaties van OS-level virtualisatie, ik bespreek hieronder de meest relevante voor onze probleemstelling. Chroots worden bijvoorbeeld niet besproken omdat je hiermee geen limitaties kunt opleggen voor geheugen- en cpu-gebruik.
 \begin{description}
 \item[LXC] LXC of Linux Containers maakt gebruik van cgroups (control groups) en namespaces om OS-level virtualisatie toe te laten. LXC maakt dus gebruik van de Linux kernel om virtualisatie aan te bieden.
 \item[Docker] Docker gebruikt LXC om virtualisatie aan te bieden en is geprogrammeerd in Go \cite{dockergithub}. Het voordeel van Docker is dat er een grote repository bestaat met beschikbare templates zodat je zelf geen LXC template meer hoeft te maken \cite{dockerrepo}.
