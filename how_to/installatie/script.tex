@@ -1,1 +1,34 @@
-EPIC SCRIPT INCOMMING
+\begin{lstlisting}
+#!/bin/bash
+# Het uitvoeren van dit script zal de nodige configuratie verzorgen.
+    
+# 130 (Website)
+echo "Making Container for Website..."
+/home/adri/bin/make_container 130 website
+vzctl start 130
+echo "Done!"
+    
+# 131 (SQL server)
+echo "Making Container for MySQL Database..."
+/home/adri/bin/make_container 131 database
+vzctl start 131
+echo "Done! Please be patient, starting up MySQL takes a while..."
+echo "You can now login on our website (192.168.255.130) with the following credentials: 'test' and 'testtest' as password."
+    
+# 132 (Coderunner)
+echo "Making Container for Perl Daemon..."
+/home/adri/bin/make_container 132 perldaemon
+vzctl start 132
+echo "Done! You can now try to solve the memory exercises!"
+    
+# 133 (Vuurmuur)
+echo "Making CTF exercise..."
+/home/adri/bin/make_container 133 vuurmuur
+vzctl start 133
+   
+# 134 (Bank of Belgium)
+echo "Making another CTF exercise..."
+/home/adri/bin/make_container 134 bob
+vzctl start 134
+echo "Done!"
+\end{lstlisting}

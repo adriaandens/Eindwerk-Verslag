@@ -52,9 +52,10 @@ De keuze om de website en de SQL-server in een aparte container te draaien is om
 
 De database bestaat uit twee verschillende schema’s:
 \begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{systeem/db1.jpg}
+
+\includegraphics[scale=0.5,bb= 0 0 0 380]{systeem/db1.jpg}
 \end{figure}
+
 	\begin{itemize}
 	\item aantal\_oefeningen: bevat het aantal oefeningen dat elke soort heeft. Hierdoor krijgen de gebruikers een achievement als ze alle oefeningen van een categorie hebben opgelost en wordt het totaal aantal oefeningen berekend, \ldots
 	\item downloads: hierin bevinden de downloadbare bestanden zich zodat deze automatisch uitgelezen kunnen worden.
@@ -64,10 +65,12 @@ De database bestaat uit twee verschillende schema’s:
 	\item trivia: hierin staan alle vragenreeksen zodat de vragen mooi per 10 verdeeld worden.
 	\item Trivia\_vragen: hierin staan alle quiz vragen en de oefeningen reeks waarbij ze behoren.
 	\end{itemize}
+
 \begin{figure}[H]
-\centering
-\includegraphics[scale=0.5]{systeem/db2.jpg}
+
+\includegraphics[scale=0.5,bb= -100 0 0 175]{systeem/db2.jpg}
 \end{figure}
+
 	\begin{itemize}
 	\item hellokittyworld: deze tabel wordt gebruikt voor SQL injection bij de vierde complexe oefening.
 	\item Sqlomgeving: deze tabel wordt gebruikt voor SQL injection bij de vierde complexe oefening.
