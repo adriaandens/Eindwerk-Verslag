@@ -1,8 +1,8 @@
 Zet de server aan via de startknop vooraan op de server. De memory check kan je skippen door op ESC te drukken. (Dit is het trage balkje dat wit kleurt) Bij het GRUB menu zijn er vier opties, neem de derde (degene met ``openvz'' in de naam) item in de lijst. 
 
 Wacht totdat het systeem om een login vraagt. Login met de volgende credentials:\\ 
-~~~~~~~gebruiker: root\\
-~~~~~~~paswoord: t
+gebruiker: root\\
+paswoord: t
 
 Voer daarna het onderstaande commando uit:
 \begin{lstlisting}
@@ -15,3 +15,13 @@ Surf nu naar 192.168.255.130 in je favoriete browser.
 Je kan nu inloggen met de user `test' en paswoord `testtest' of je kan een nieuwe gebruiker aanmaken.
 
 Enjoy the exercises!
+
+\subsection{If things go wrong}
+
+Als er dingen mis gaan, kan dit je helpen:
+\begin{enumerate}
+\item De templates zijn opgeslagen in \texttt{/var/lib/vz/template/cache/}. De naam die je meegeeft aan make\_container als tweede argument is de naam van de template (minus \texttt{.tar.gz}). Bijvoorbeeld als je de \texttt{website.tar.gz} wil opstarten, doe je: \texttt{make\_container 130 website}. Het eerste argument is gelijk aan het laatste octet van het IP-adres.
+\item De configuratiefile van een Container staat in de map: \texttt{/etc/vz/conf/}.
+\item Gebruik de tool \texttt{/home/adri/bin/destroyve} om een Container af te zetten en te verwijderen.
+\item \texttt{make\_container} en \texttt{destroyve} zijn open source, open ze in \texttt{vim} om de code te bekijken. 
+\end{enumerate}
