@@ -24,4 +24,6 @@ Als er dingen mis gaan, kan dit je helpen:
 \item De configuratiefile van een Container staat in de map: \texttt{/etc/vz/conf/}.
 \item Gebruik de tool \texttt{/home/adri/bin/destroyve} om een Container af te zetten en te verwijderen.
 \item \texttt{make\_container} en \texttt{destroyve} zijn open source, open ze in \texttt{vim} om de code te bekijken. 
+\item Met het commando \texttt{vzlist} kan je alle containers bekijken die aan het draaien zijn. Zorg ervoor dat elke container op het IP-adres loopt dat voorzien is. (130 = website, 131 = sqlserver, 132 = coderunner, 133 = vuurmuur, 134 = bob). Kill de container met \texttt{destroyve} als dit niet zo is.
+\item Met \texttt{vzctl enter CTID} kan je in een container inloggen als root.
 \end{enumerate}
